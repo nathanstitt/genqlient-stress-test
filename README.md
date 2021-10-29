@@ -6,7 +6,7 @@ I attempted to migrate to genqlient but ran into several issues with recursive r
 and empty fields
 
 Two points of interest are:
- * All the pointer:true comments I had to add in order for it to compile due to recursive references.  https://github.com/nathanstitt/genqlient-stress-test/blob/main/genqlient.graphql#L49-L170
- * The code in main https://github.com/nathanstitt/genqlient-stress-test/blob/main/main.go#L19-L44 which constructs a user object, then run it and observe the 
+ * All the [pointer:true comments](https://github.com/nathanstitt/genqlient-stress-test/blob/main/genqlient.graphql#L49-L170) that I needed for it to compile due to recursive references.  
+ * The code in main which [constructs a user object](https://github.com/nathanstitt/genqlient-stress-test/blob/main/main.go#L19-L44), then run it and observe the 
 actual structure that's being built (18,938 lines).  The Hasura gql engine completely chokes on it
 
