@@ -1,0 +1,191 @@
+fragment UserEmail on users {
+  email
+  full_name
+}
+
+# @genqlient(for: "account_user_bool_exp._not", pointer: true)
+fragment AccountUser on account_user_role {
+  id
+  role
+  user_id
+  client_id
+  account_id
+  user {
+    id
+    phone
+    banned
+    ...UserEmail
+  }
+}
+
+query accountUserByAccountId($email: String!, $accountId: bigint!) {
+  account_user: account_user_role(
+    limit: 1,
+    where: {
+      user: { lowercase_email: { _eq: $email } }
+      account_id: { _eq: $accountId }
+    }
+  ) {
+    ...AccountUser
+  }
+}
+
+# these really need: @genqlient(omitempty: true)
+mutation insertMessage($msg:  message_insert_input!) {
+  insert_message_one(object:$msg) {
+    id
+  }
+}
+
+
+mutation insertTempUser($user: user_temp_insert_input!) {
+  insert_user_temp_one(object:$user) {
+    id
+    activation_code
+  }
+}
+
+
+# @genqlient(for: "account_bool_exp.account_user_role", pointer: true)
+# @genqlient(for: "account_bool_exp.billing_infos", pointer: true)
+# @genqlient(for: "account_bool_exp.events", pointer: true)
+# @genqlient(for: "account_bool_exp.clients", pointer: true)
+# @genqlient(for: "account_bool_exp.databases", pointer: true)
+# @genqlient(for: "account_bool_exp.account_users", pointer: true)
+# @genqlient(for: "account_bool_exp.owner", pointer: true)
+# @genqlient(for: "account_bool_exp.settings", pointer: true)
+# @genqlient(for: "account_bool_exp.project_categories", pointer: true)
+# @genqlient(for: "account_bool_exp.task_categories", pointer: true)
+# @genqlient(for: "account_bool_exp.time_entry_locations", pointer: true)
+# @genqlient(for: "account_bool_exp.user", pointer: true)
+# @genqlient(for: "account_bool_exp.client", pointer: true)
+# @genqlient(for: "client_bool_exp._not", pointer: true)
+# @genqlient(for: "client_time_recorded_bool_exp._not", pointer: true)
+# @genqlient(for: "comment_bool_exp._not", pointer: true)
+# @genqlient(for: "comment_bool_exp.project", pointer: true)
+# @genqlient(for: "comment_bool_exp.user", pointer: true)
+# @genqlient(for: "database_bool_exp._not", pointer: true)
+# @genqlient(for: "database_bool_exp.account", pointer: true)
+# @genqlient(for: "database_bool_exp.client", pointer: true)
+# @genqlient(for: "database_bool_exp.db_fields", pointer: true)
+# @genqlient(for: "database_bool_exp.db_filters", pointer: true)
+# @genqlient(for: "database_bool_exp.db_records", pointer: true)
+# @genqlient(for: "document_bool_exp._not", pointer: true)
+# @genqlient(for: "db_field_bool_exp._not", pointer: true)
+# @genqlient(for: "db_field_bool_exp._not", pointer: true)
+# @genqlient(for: "db_filter_bool_exp._not", pointer: true)
+# @genqlient(for: "db_note_bool_exp._not", pointer: true)
+# @genqlient(for: "db_note_bool_exp.db_record", pointer: true)
+# @genqlient(for: "db_note_bool_exp._not", pointer: true)
+# @genqlient(for: "db_record_bool_exp._not", pointer: true)
+# @genqlient(for: "db_record_bool_exp.database", pointer: true)
+# @genqlient(for: "event_bool_exp._not", pointer: true)
+# @genqlient(for: "file_bool_exp._not", pointer: true)
+# @genqlient(for: "file_bool_exp.project", pointer: true)
+# @genqlient(for: "file_bool_exp.created_by", pointer: true)
+# @genqlient(for: "file_bool_exp.documents", pointer: true)
+# @genqlient(for: "file_bool_exp.task_file_links", pointer: true)
+# @genqlient(for: "file_bool_exp.children", pointer: true)
+# @genqlient(for: "file_bool_exp.parent", pointer: true)
+# @genqlient(for: "form_bool_exp._not", pointer: true)
+# @genqlient(for: "form_bool_exp.account", pointer: true)
+# @genqlient(for: "form_bool_exp.created_by", pointer: true)
+# @genqlient(for: "form_bool_exp.updated_by", pointer: true)
+# @genqlient(for: "message_bool_exp._not", pointer: true)
+# @genqlient(for: "milestone_bool_exp._not", pointer: true)
+# @genqlient(for: "milestone_bool_exp.project", pointer: true)
+# @genqlient(for: "permissions_bool_exp._not", pointer: true)
+# @genqlient(for: "client_bool_exp._not", pointer: true)
+# @genqlient(for: "client_bool_exp.account", pointer: true)
+# @genqlient(for: "client_bool_exp.time_recorded", pointer: true)
+# @genqlient(for: "client_bool_exp.projects", pointer: true)
+# @genqlient(for: "client_bool_exp.accounts", pointer: true)
+# @genqlient(for: "client_bool_exp.events", pointer: true)
+# @genqlient(for: "client_bool_exp.databases", pointer: true)
+# @genqlient(for: "client_bool_exp.account_users", pointer: true)
+# @genqlient(for: "project_bool_exp._not", pointer: true)
+# @genqlient(for: "project_bool_exp.allowed_clients", pointer: true)
+# @genqlient(for: "project_bool_exp.allowed_users", pointer: true)
+# @genqlient(for: "project_bool_exp.client", pointer: true)
+# @genqlient(for: "project_bool_exp.comments", pointer: true)
+# @genqlient(for: "project_bool_exp.updated_by", pointer: true)
+# @genqlient(for: "project_bool_exp.created_by", pointer: true)
+# @genqlient(for: "project_bool_exp.pcat", pointer: true)
+# @genqlient(for: "project_bool_exp.permissions", pointer: true)
+# @genqlient(for: "project_bool_exp.responsible", pointer: true)
+# @genqlient(for: "project_bool_exp.tasks", pointer: true)
+# @genqlient(for: "project_bool_exp.time_entries", pointer: true)
+# @genqlient(for: "project_category_bool_exp._not", pointer: true)
+# @genqlient(for: "project_time_cutoff_bool_exp._not", pointer: true)
+# @genqlient(for: "settings_bool_exp._not", pointer: true)
+# @genqlient(for: "task_allowed_users_bool_exp._not", pointer: true)
+# @genqlient(for: "task_bool_exp._not", pointer: true)
+# @genqlient(for: "task_bool_exp.created_by", pointer: true)
+# @genqlient(for: "task_bool_exp.updated_by", pointer: true)
+# @genqlient(for: "task_bool_exp.time_entries", pointer: true)
+# @genqlient(for: "task_bool_exp.file_link", pointer: true)
+# @genqlient(for: "task_bool_exp.users", pointer: true)
+# @genqlient(for: "task_bool_exp.comments", pointer: true)
+# @genqlient(for: "task_comment_bool_exp.task", pointer: true)
+# @genqlient(for: "task_comment_bool_exp.created_by", pointer: true)
+# @genqlient(for: "task_category_bool_exp._not", pointer: true)
+# @genqlient(for: "task_comment_bool_exp._not", pointer: true)
+# @genqlient(for: "task_file_link_bool_exp._not", pointer: true)
+# @genqlient(for: "task_timer_bool_exp._not", pointer: true)
+# @genqlient(for: "task_timer_bool_exp.task", pointer: true)
+# @genqlient(for: "task_timer_bool_exp._not", pointer: true)
+# @genqlient(for: "task_timer_bool_exp.user", pointer: true)
+# @genqlient(for: "time_entry_bool_exp.user", pointer: true)
+# @genqlient(for: "time_entry_bool_exp._not", pointer: true)
+# @genqlient(for: "time_entry_bool_exp.project", pointer: true)
+# @genqlient(for: "time_entry_location_bool_exp._not", pointer: true)
+# @genqlient(for: "task_user_bool_exp.task", pointer: true)
+# @genqlient(for: "task_user_bool_exp.user", pointer: true)
+# @genqlient(for: "users_bool_exp._not", pointer: true)
+# @genqlient(for: "visible_users_bool_exp._not", pointer: true)
+# @genqlient(for: "task_user_bool_exp._not", pointer: true)
+# @genqlient(for: "project_allowed_users_bool_exp._not", pointer: true)
+# @genqlient(for: "db_note_bool_exp._not", pointer: true)
+# @genqlient(for: "user_client_access_bool_exp._not", pointer: true)
+# @genqlient(for: "account_user_bool_exp.account", pointer: true)
+# @genqlient(for: "account_user_bool_exp.client", pointer: true)
+# @genqlient(for: "account_user_bool_exp.user", pointer: true)
+# @genqlient(for: "account_user_role_bool_exp._not", pointer: true)
+# @genqlient(for: "availability_bool_exp.user", pointer: true)
+# @genqlient(for: "availability_bool_exp._not", pointer: true)
+# @genqlient(for: "billing_info_bool_exp._not", pointer: true)
+# @genqlient(for: "account_user_bool_exp._not", pointer: true)
+# @genqlient(for: "account_on_conflict.where", pointer: true)
+# @genqlient(for: "account_on_conflict.constraint", pointer: true)
+# @genqlient(for: "account_bool_exp._not", pointer: true)
+# @genqlient(for: "file_insert_input.parent", pointer: true)
+# @genqlient(for: "client_insert_input.account", pointer: true)
+# @genqlient(for: "client_insert_input.time_recorded", pointer: true)
+# @genqlient(for: "project_insert_input.permissions", pointer: true)
+# @genqlient(for: "task_insert_input.file_link", pointer: true)
+# @genqlient(for: "project_insert_input.pcat", pointer: true)
+# @genqlient(for: "account_insert_input.owner", pointer: true)
+# @genqlient(for: "account_insert_input.client", pointer: true)
+# @genqlient(for: "users_obj_rel_insert_input.on_conflict", pointer: true)
+# @genqlient(for: "account_user_obj_rel_insert_input.on_conflict", pointer: true)
+mutation insertAccount(
+  $tempUserId: bigint!,
+  $account: account_insert_input!
+) {
+  insert_account_one(object: $account) {
+	id
+  }
+
+  delete_user_temp(where: { id: {_eq: $tempUserId} }) {
+	affected_rows
+  }
+}
+
+# likewise, needs genqlient(omitempty: true)
+mutation insertTaskComment($comment: task_comment_insert_input!) {
+  insert_task_comment_one(
+    object: $comment
+  ) {
+    id
+  }
+}

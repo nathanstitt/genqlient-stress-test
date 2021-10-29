@@ -1,0 +1,25 @@
+# Default genqlient config; for full documentation see:
+# https://github.com/Khan/genqlient/blob/main/docs/genqlient.yaml
+package: main
+
+bindings:
+    bigint:
+        type: int64
+    date:
+        type: time.Time
+    timestamptz:
+        type: time.Time
+    timestamp:
+        type: time.Time
+    _int8:
+        type: '[]int64'
+    float8:
+        type: float32
+    jsonb:
+        type: 'interface{}'
+        # marshaler: "github.com/nathanstitt/go-marshal/marshal.MarshalJSONB"
+        # unmarshaler: "github.com/nathanstitt/go-marshal/marshal.UnmarshalJSONB"
+schema: schema.graphql
+operations:
+  - genqlient.graphql
+generated: generated-gql.go
