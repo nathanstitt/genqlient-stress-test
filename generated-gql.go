@@ -3383,7 +3383,7 @@ fragment UserEmail on users {
 	return &retval, err
 }
 
-// these really need: @genqlient(omitempty: true)
+// and also this errors: genqlient(for: "message_insert_input.update_user", omitempty: true)
 func insertMessage(
 	ctx context.Context,
 	client graphql.Client,

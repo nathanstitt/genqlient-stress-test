@@ -30,11 +30,10 @@ query accountUserByAccountId($email: String!, $accountId: bigint!) {
   }
 }
 
-# these really need: @genqlient(omitempty: true)
+
+# and also this errors: genqlient(for: "message_insert_input.update_user", omitempty: true)
 mutation insertMessage($msg:  message_insert_input!) {
-  insert_message_one(object:$msg) {
-    id
-  }
+  insert_message_one(object:$msg) { id }
 }
 
 
@@ -189,3 +188,14 @@ mutation insertTaskComment($comment: task_comment_insert_input!) {
     id
   }
 }
+
+
+# this is commented out so code will compile
+#
+# @genqlient(omitempty: true)
+# @genqlient(for: "account_bool_exp.id", omitempty: false)
+# query findAccount($query:  account_bool_exp) {
+#  account(where: $query) {
+#    id
+#  }
+# }
